@@ -1,0 +1,35 @@
+Cloudera - Case 
+
+We have tried to restart cloudera-scm-agent as well as host monitor but it's not working.
+Then we stopped few roles on the host and then tried to start it but again issue persist.
+The is enough memory and space on the host.
+
+Apporch  : 1  Jeremy Molina
+
+Also, a screenshot from CM > Hosts > All Hosts > On the table please make sure that Agent Heartbeat is display.
+Check the logs of SCM-AGENT
+
+Approch  : 2
+
+Thanks for your time on the call. Please find the summary below:
+1. The cloudera-scm-agent for multiple nodes are exceeding 15 seconds(Heartbeat), which indicates that there is a network or performance issue.
+                                    Refer this attachment :- https://drive.google.com/file/d/1yKVA1HbijuyDno700A-Ss3p8b2YxZrV-/view?usp=sharing
+2. We fixed an NTP issue on the host: 
+3. We stopped the cloudera-scm-agent and killed the supervisord 
+4. We were able to start all the services/roles.
+
+Pending tasks:
+- A diagnostic bundle was uploaded to see if any punctual, immediate changes can be suggested to improve the performance.
+- We need to increase Host Monitor Heap to 2GB and non-heap to 3GB.
+- You will investigate with your Network and SysAdmins the observed performance issues.
+
+
+Approch  :  3
+
+Notable problems:
+- Agents fail to heartbeat consistently. Heartbeat should always be between 0 and 15 seconds.
+- Host performance, especially CPU is sometimes too high. Improving the Host performance, like adding more memory or moving the host to a more powerful CPU host may be some of the options you can take. Moving Roles and Services to a new host is also a way to alleviate the stress that the current host suffers.
+- Increasing Heap for Host Monitor was intended to mitigate the issue not resolve it. This is not the real root cause, but a heap size increase was necessary.
+- Multiple hosts are showing clock skew, this is because of the network performance, the hosts trying to reach an unreachable NTP Server (we solved this on the call), and the NTP not working properly, this is again, because of the general performance issues.
+
+
