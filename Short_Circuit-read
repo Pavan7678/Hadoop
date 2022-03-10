@@ -1,0 +1,8 @@
+when the client asks the DataNode to read a file, 
+the DataNode reads that file off of the disk and sends the data to the client over a TCP socket.
+
+So-called “short-circuit. This is a special path in the filesystem that allows the client and the DataNodes to communicate.
+
+1) https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/ShortCircuitLocalReads.html#:~:text=In%20HDFS%2C%20reads%20normally%20go,to%20read%20the%20file%20directly.
+
+2)https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.6.4/bk_hdfs-administration/content/ch_short_circuit_local_reads_hdfs.html
