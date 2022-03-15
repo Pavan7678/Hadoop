@@ -1,0 +1,22 @@
+Hello Team,
+We did check more the issue and observed, we need to revisit the HiveLLAP configuration as below:
+The current configuration for LLAP:
+YARN Minimum Container Size (Memory) = 1024MB
+YARN.scheduler.Maximum_allocation.mb= 328704
+Memory per Daemon  = 300GB
+In-Memory Cache per Daemon = 71GB
+Number of executors per LLAP Daemon = 59
+hive.tez.container.size = 4096MB
+As per the Cloudera's recommendation, the current configuration can be updated as below:
+Proposed Solution: Set Tez container size = 6GB with below configuration
+YARN Minimum Container Size (Memory) = 1024MB
+YARN.scheduler.Maximum_allocation.mb= 328704
+Memory per Daemon  = 328GB (Headroom + executors + cache)		
+Headroom = 6GB
+hive.tez.container.size =  6GB (Update value in Advanced hive-interactive-site)
+Number of executors per LLAP Daemon = 44
+LLAP heap size = 44*6 = 264 GB			
+In-Memory Cache per Daemon= 328(Memory per Daemon) - 6(Headroom) - 264(Heapsize_llap) = 58GB
+We can update the above configuration and keep gradually increasing the Tez container size, till we get the result.
+Another thing we can also increase the no. of daemon count from 3 to 5, if required.
+Thanks
